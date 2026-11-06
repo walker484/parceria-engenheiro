@@ -1,0 +1,472 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#174ea6">
+<title>DAVI OBRAS | Central de Parcerias</title>
+
+<style>
+:root{
+--blue:#174ea6;
+--light:#eaf2ff;
+--line:#d7e4f7;
+--ink:#183153;
+--muted:#64748b;
+--green:#16834a;
+}
+*{box-sizing:border-box}
+body{
+margin:0;
+background:#f7faff;
+color:var(--ink);
+font-family:Arial,sans-serif;
+}
+header{
+background:white;
+border-bottom:1px solid var(--line);
+padding:22px 16px;
+}
+.wrap,main{
+max-width:1100px;
+margin:auto;
+}
+.brand{
+font-weight:800;
+color:var(--blue);
+font-size:24px;
+}
+.sub{color:var(--muted);margin-top:6px}
+main{padding:20px 14px}
+.hero,.proposal,.card{
+background:white;
+border:1px solid var(--line);
+border-radius:14px;
+padding:17px;
+}
+.hero h1{color:var(--blue);font-size:23px}
+.stats{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px;
+margin-top:16px;
+}
+.stat{
+background:var(--light);
+border-radius:10px;
+padding:12px;
+}
+.stat b{
+display:block;
+font-size:22px;
+color:var(--blue);
+}
+.stat span{font-size:12px}
+.toolbar{
+display:grid;
+grid-template-columns:2fr 1fr 1fr;
+gap:10px;
+margin:16px 0;
+}
+input,select,textarea{
+width:100%;
+padding:12px;
+border:1px solid var(--line);
+border-radius:9px;
+background:white;
+font:inherit;
+}
+.cards{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:12px;
+}
+.card h3{color:var(--blue);margin:0 0 5px}
+.meta{font-size:12px;color:var(--muted)}
+.phone{font-weight:bold;margin:10px 0}
+.actions{
+display:flex;
+gap:8px;
+flex-wrap:wrap;
+}
+button,.btn{
+border:0;
+border-radius:9px;
+padding:11px 13px;
+font-weight:bold;
+cursor:pointer;
+text-decoration:none;
+display:inline-block;
+}
+.primary{background:var(--green);color:white}
+.secondary{background:var(--light);color:var(--blue)}
+.status{margin-top:12px;font-size:13px}
+.status input{width:auto}
+.note{
+background:#fff8e8;
+border:1px solid #f2dfb3;
+padding:13px;
+margin:18px 0;
+border-radius:10px;
+font-size:13px;
+}
+.proposal{margin-top:18px}
+.proposal h2{color:var(--blue);font-size:19px}
+.proposal textarea{min-height:150px}
+footer{
+text-align:center;
+padding:25px;
+color:var(--muted);
+font-size:12px;
+}
+@media(max-width:680px){
+.toolbar,.cards{grid-template-columns:1fr}
+.stats{grid-template-columns:repeat(3,1fr)}
+.stat b{font-size:18px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="wrap">
+<div class="brand">DAVI OBRAS</div>
+<div class="sub">Central de parcerias • Construção civil e empreitadas</div>
+</div>
+</header>
+
+<main>
+
+<section class="hero">
+<h1>Encontre oportunidades de obras</h1>
+<p>Organize seus contatos e acompanhe suas oportunidades de trabalho.</p>
+
+<div class="stats">
+<div class="stat">
+<b id="total">0</b>
+<span>Contatos</span>
+</div>
+<div class="stat">
+<b id="sent">0</b>
+<span>Mensagens enviadas</span>
+</div>
+<div class="stat">
+<b id="replies">0</b>
+<span>Respostas</span>
+</div>
+</div>
+</section>
+
+<div class="toolbar">
+<input id="search" placeholder="Buscar empresa ou telefone">
+
+<select id="city">
+<option value="">Todas as cidades</option>
+<option>Betim</option>
+<option>Igarapé</option>
+<option>Ibirité</option>
+</select>
+
+<select id="category">
+<option value="">Todas as categorias</option>
+<option>Engenharia</option>
+<option>Construtora / empreiteira</option>
+<option>Obras / construção</option>
+</select>
+</div>
+
+<div class="cards" id="cards"></div>
+
+<div class="note">
+<b>Atenção:</b> confirme os números e nomes das empresas antes de enviar propostas.
+</div>
+
+<section class="proposal">
+<h2>Envio em sequência pelo WhatsApp</h2>
+
+<div class="actions">
+<button class="secondary" onclick="selectVisible(true)">
+Selecionar visíveis
+</button>
+<button class="secondary" onclick="selectVisible(false)">
+Limpar seleção
+</button>
+</div>
+
+<p><b id="selectedCount">0</b> contatos selecionados</p>
+
+<select id="messageChoice">
+<option value="intro">Apresentação e parceria</option>
+<option value="empreitada">Proposta de empreitada</option>
+<option value="follow">Acompanhamento</option>
+</select>
+
+<div class="actions" style="margin-top:12px">
+<button class="primary" onclick="startSequence()">Iniciar sequência</button>
+<button class="secondary" onclick="nextSequence()">Próximo contato</button>
+</div>
+
+<p id="sequenceInfo">Selecione os contatos e inicie.</p>
+</section>
+
+<section class="proposal">
+<h2>Mensagem de apresentação</h2>
+
+<textarea id="message">Olá, tudo bem?
+
+Meu nome é Davi. Trabalho na construção civil e tenho experiência prática em obras.
+
+Estou buscando parcerias com engenheiros, construtoras e empreiteiras para execução de serviços e empreitadas.
+
+Gostaria de saber se vocês trabalham com profissionais parceiros ou equipes para executar obras.
+
+Posso conversar com o responsável pelas obras?
+
+Obrigado pela atenção!
+Davi</textarea>
+
+<button class="secondary" onclick="copyMessage()">Copiar mensagem</button>
+</section>
+
+</main>
+
+<footer>
+DAVI OBRAS • Sua rede de oportunidades na construção civil
+</footer>
+
+<script>
+
+const contacts = [
+["DIP Engenharia e Projetos","Betim","Engenharia","31 4104-3184"],
+["Lim Engenharia","Betim","Engenharia","31 98729-0028"],
+["LINEAR Projetos e Soluções","Betim","Engenharia","31 99680-1478"],
+["ASTENG Engenharia","Betim","Engenharia","31 99955-1332"],
+["Encad Projetos","Betim","Engenharia","31 3594-1907"],
+["Gabiotec Engenharia","Betim","Engenharia","31 3532-2499"],
+["Gabiotec Engenharia","Betim","Engenharia","31 99924-2329"],
+["Dutra Engenharia","Betim","Engenharia","31 3531-0234"],
+["Dutra Engenharia","Betim","Engenharia","31 99741-1759"],
+["Promec Engenharia","Betim","Engenharia","31 4042-8768"],
+["Promec Engenharia","Betim","Engenharia","31 99945-9009"],
+["HJ Projetos e Engenharia","Betim","Engenharia","31 99725-5872"],
+["GAB Projetos","Betim","Engenharia","31 99971-3400"],
+["R.E Engenharia","Betim","Engenharia","31 99289-2388"],
+["Engar Engenharia","Betim","Engenharia","31 98836-8884"],
+["WM Engenharia","Betim","Engenharia","31 99157-2458"],
+["Bios Engenharia","Betim","Engenharia","31 99672-3898"],
+["JGM Engenharia","Betim","Engenharia","31 99945-7313"],
+["VD Engenharia","Betim","Engenharia","31 97225-3322"],
+["Leão Costa Engenharia","Betim","Engenharia","31 3531-9964"],
+["BRS Engenharia","Igarapé","Engenharia","31 3534-3556"],
+["RP Engenharia","Igarapé","Engenharia","31 97525-5051"],
+["Slump Engenharia","Igarapé","Engenharia","31 3534-1488"],
+["Jasa Construtora","Igarapé","Construtora / empreiteira","31 99090-2932"],
+["MWT Construtora","Igarapé","Construtora / empreiteira","31 99825-7190"],
+["GC Engenharia","Ibirité","Engenharia","31 99867-2982"],
+["Augustus Engenharia","Ibirité","Engenharia","31 97139-6168"],
+["Construtora GEA","Ibirité","Construtora / empreiteira","31 3598-9424"],
+["Empresa de paredes de concreto (nome a confirmar)","Ibirité","Obras / construção","31 4134-1876"],
+["R&C Construtora","Ibirité","Construtora / empreiteira","31 99663-5410"],
+["NBL Modulares","Ibirité","Construtora / empreiteira","31 99979-1028"],
+["Construtora / incorporadora (nome a confirmar)","Betim","Construtora / empreiteira","31 2571-2626"]
+];
+
+const key="daviObrasStatusV1";
+let status={};
+try{
+status=JSON.parse(localStorage.getItem(key)||"{}");
+}catch(e){}
+
+let selected=new Set();
+let sequence=[];
+let sequencePos=-1;
+
+const messages={
+empreitada:`Olá, tudo bem?
+
+Meu nome é Davi e trabalho na construção civil. Tenho experiência prática em obras e estou buscando parcerias para assumir serviços por empreitada.
+
+Posso apresentar uma proposta de execução de serviços conforme o projeto, escopo e prazo.
+
+Quem seria a pessoa responsável pelas obras para conversarmos?
+
+Obrigado!
+Davi`,
+
+follow:`Olá! Tudo bem?
+
+Estou retomando nosso contato para saber se existe alguma necessidade de profissionais parceiros para execução de obras ou empreitadas.
+
+Fico à disposição para conversar e apresentar uma proposta.
+
+Obrigado!
+Davi`
+};
+
+function digits(s){
+return s.replace(/\D/g,"");
+}
+
+function toggleSelected(i,v){
+if(v)selected.add(i);
+else selected.delete(i);
+updateSelectedCount();
+}
+
+function selectVisible(v){
+document.querySelectorAll(".bulk-check").forEach(el=>{
+const i=Number(el.dataset.index);
+if(v)selected.add(i);
+else selected.delete(i);
+el.checked=v;
+});
+updateSelectedCount();
+}
+
+function updateSelectedCount(){
+document.getElementById("selectedCount").textContent=selected.size;
+}
+
+function getCurrentMessage(){
+const choice=document.getElementById("messageChoice").value;
+return choice==="intro"
+?document.getElementById("message").value
+:messages[choice];
+}
+
+function startSequence(){
+sequence=[...selected].sort((a,b)=>a-b);
+sequencePos=-1;
+
+if(!sequence.length){
+document.getElementById("sequenceInfo").textContent="Selecione pelo menos um contato.";
+return;
+}
+nextSequence();
+}
+
+function nextSequence(){
+
+if(!sequence.length){
+document.getElementById("sequenceInfo").textContent="Selecione os contatos e inicie.";
+return;
+}
+
+sequencePos++;
+
+if(sequencePos>=sequence.length){
+document.getElementById("sequenceInfo").textContent="Sequência finalizada.";
+return;
+}
+
+const c=contacts[sequence[sequencePos]];
+
+const url="https://wa.me/55"+
+digits(c[3])+
+"?text="+encodeURIComponent(getCurrentMessage());
+
+document.getElementById("sequenceInfo").textContent=
+"Contato "+(sequencePos+1)+" de "+sequence.length+
+": "+c[0]+". Confirme o envio no WhatsApp.";
+
+window.open(url,"_blank","noopener");
+}
+
+function render(){
+
+const q=document.getElementById("search").value.toLowerCase();
+const city=document.getElementById("city").value;
+const cat=document.getElementById("category").value;
+
+const filtered=contacts.map((c,i)=>({
+name:c[0],city:c[1],cat:c[2],phone:c[3],i
+})).filter(c=>
+(!q||(c.name+" "+c.phone).toLowerCase().includes(q))&&
+(!city||c.city===city)&&
+(!cat||c.cat===cat)
+);
+
+document.getElementById("cards").innerHTML=filtered.map(c=>{
+
+const s=status[c.i]||{};
+const wa="https://wa.me/55"+digits(c.phone)+
+"?text="+encodeURIComponent(document.getElementById("message").value);
+
+return `
+<article class="card">
+<h3>${c.name}</h3>
+<div class="meta">${c.city} • ${c.cat}</div>
+<div class="phone">${c.phone}</div>
+
+<div class="status">
+<label>
+<input class="bulk-check" type="checkbox"
+data-index="${c.i}"
+${selected.has(c.i)?"checked":""}
+onchange="toggleSelected(${c.i},this.checked)">
+Selecionar para sequência
+</label>
+</div>
+
+<div class="actions">
+<a class="btn primary" href="${wa}" target="_blank" rel="noopener">
+Abrir WhatsApp
+</a>
+<a class="btn secondary" href="tel:+55${digits(c.phone)}">
+Ligar
+</a>
+</div>
+
+<div class="status">
+<label>
+<input type="checkbox" ${s.sent?"checked":""}
+onchange="setStatus(${c.i},'sent',this.checked)">
+Mensagem enviada
+</label>
+</div>
+
+<div class="status">
+<label>
+<input type="checkbox" ${s.reply?"checked":""}
+onchange="setStatus(${c.i},'reply',this.checked)">
+Respondeu
+</label>
+</div>
+</article>
+`;
+}).join("")||"<p>Nenhum contato encontrado.</p>";
+
+document.getElementById("total").textContent=contacts.length;
+document.getElementById("sent").textContent=
+Object.values(status).filter(x=>x.sent).length;
+document.getElementById("replies").textContent=
+Object.values(status).filter(x=>x.reply).length;
+
+updateSelectedCount();
+}
+
+function setStatus(i,k,v){
+status[i]=status[i]||{};
+status[i][k]=v;
+localStorage.setItem(key,JSON.stringify(status));
+render();
+}
+
+function copyMessage(){
+const t=document.getElementById("message");
+t.select();
+document.execCommand("copy");
+alert("Mensagem copiada.");
+}
+
+["search","city","category"].forEach(id=>{
+document.getElementById(id).addEventListener("input",render);
+});
+
+render();
+
+</script>
+</body>
+</html>
