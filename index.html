@@ -1,472 +1,2137 @@
 
+            
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#174ea6">
-<title>DAVI OBRAS | Central de Parcerias</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-:root{
---blue:#174ea6;
---light:#eaf2ff;
---line:#d7e4f7;
---ink:#183153;
---muted:#64748b;
---green:#16834a;
-}
-*{box-sizing:border-box}
-body{
-margin:0;
-background:#f7faff;
-color:var(--ink);
-font-family:Arial,sans-serif;
-}
-header{
-background:white;
-border-bottom:1px solid var(--line);
-padding:22px 16px;
-}
-.wrap,main{
-max-width:1100px;
-margin:auto;
-}
-.brand{
-font-weight:800;
-color:var(--blue);
-font-size:24px;
-}
-.sub{color:var(--muted);margin-top:6px}
-main{padding:20px 14px}
-.hero,.proposal,.card{
-background:white;
-border:1px solid var(--line);
-border-radius:14px;
-padding:17px;
-}
-.hero h1{color:var(--blue);font-size:23px}
-.stats{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:10px;
-margin-top:16px;
-}
-.stat{
-background:var(--light);
-border-radius:10px;
-padding:12px;
-}
-.stat b{
-display:block;
-font-size:22px;
-color:var(--blue);
-}
-.stat span{font-size:12px}
-.toolbar{
-display:grid;
-grid-template-columns:2fr 1fr 1fr;
-gap:10px;
-margin:16px 0;
-}
-input,select,textarea{
-width:100%;
-padding:12px;
-border:1px solid var(--line);
-border-radius:9px;
-background:white;
-font:inherit;
-}
-.cards{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:12px;
-}
-.card h3{color:var(--blue);margin:0 0 5px}
-.meta{font-size:12px;color:var(--muted)}
-.phone{font-weight:bold;margin:10px 0}
-.actions{
-display:flex;
-gap:8px;
-flex-wrap:wrap;
-}
-button,.btn{
-border:0;
-border-radius:9px;
-padding:11px 13px;
-font-weight:bold;
-cursor:pointer;
-text-decoration:none;
-display:inline-block;
-}
-.primary{background:var(--green);color:white}
-.secondary{background:var(--light);color:var(--blue)}
-.status{margin-top:12px;font-size:13px}
-.status input{width:auto}
-.note{
-background:#fff8e8;
-border:1px solid #f2dfb3;
-padding:13px;
-margin:18px 0;
-border-radius:10px;
-font-size:13px;
-}
-.proposal{margin-top:18px}
-.proposal h2{color:var(--blue);font-size:19px}
-.proposal textarea{min-height:150px}
-footer{
-text-align:center;
-padding:25px;
-color:var(--muted);
-font-size:12px;
-}
-@media(max-width:680px){
-.toolbar,.cards{grid-template-columns:1fr}
-.stats{grid-template-columns:repeat(3,1fr)}
-.stat b{font-size:18px}
-}
-</style>
+  <title>ObraConecta | Buscar profissionais</title>
+
+  <meta
+    name="description"
+    content="Busque engenheiros, arquitetos e empreiteiros para parcerias e obras."
+  >
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600;700&family=Martian+Mono:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+    :root {
+      --fundo: #f3f0e8;
+      --cartao: #fffdf7;
+      --texto: #1f2824;
+      --muted: #67716b;
+      --primaria: #203f33;
+      --primaria-clara: #2d5545;
+      --destaque: #ef5b2a;
+      --borda: #d6d0c3;
+      --secundaria: #e8e4da;
+      --sucesso: #177f55;
+      --perigo: #b93636;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--fundo);
+      color: var(--texto);
+      font-family: "Fira Sans", sans-serif;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .oculto {
+      display: none !important;
+    }
+
+    .cabecalho {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid var(--borda);
+      background: rgba(243, 240, 232, 0.96);
+      backdrop-filter: blur(12px);
+    }
+
+    .cabecalho-interno {
+      width: min(1400px, 94%);
+      min-height: 78px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border: 0;
+      background: transparent;
+      color: var(--texto);
+      text-align: left;
+    }
+
+    .logo-icone {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      background: var(--primaria);
+      color: white;
+      font-size: 22px;
+    }
+
+    .logo-nome {
+      font-family: "Martian Mono", monospace;
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -1px;
+    }
+
+    .logo-nome span {
+      color: var(--destaque);
+    }
+
+    .logo-descricao {
+      margin-top: 5px;
+      color: var(--muted);
+      font-family: "Martian Mono", monospace;
+      font-size: 8px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .menu {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .menu-botao {
+      position: relative;
+      border: 0;
+      padding: 12px 16px;
+      background: transparent;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .menu-botao:hover,
+    .menu-botao.ativo {
+      background: var(--primaria);
+      color: white;
+    }
+
+    .contador {
+      display: inline-block;
+      min-width: 20px;
+      margin-left: 6px;
+      padding: 2px 6px;
+      background: var(--destaque);
+      color: white;
+      font-family: "Martian Mono", monospace;
+      font-size: 9px;
+      text-align: center;
+    }
+
+    .principal {
+      width: min(1400px, 94%);
+      margin: auto;
+    }
+
+    .inicio {
+      min-height: calc(100vh - 79px);
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.65fr);
+      align-items: center;
+      gap: 80px;
+      padding: 70px 0;
+    }
+
+    .rotulo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--muted);
+      font-family: "Martian Mono", monospace;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .rotulo::before {
+      content: "";
+      width: 40px;
+      height: 2px;
+      background: var(--destaque);
+    }
+
+    .titulo-principal {
+      max-width: 850px;
+      margin: 28px 0 0;
+      font-family: "Martian Mono", monospace;
+      font-size: clamp(45px, 6vw, 82px);
+      line-height: 0.98;
+      letter-spacing: -5px;
+    }
+
+    .titulo-principal span {
+      color: var(--destaque);
+    }
+
+    .descricao-principal {
+      max-width: 650px;
+      margin: 28px 0 0;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.7;
+    }
+
+    .form-busca {
+      display: flex;
+      margin-top: 40px;
+      border: 2px solid var(--texto);
+      background: var(--cartao);
+      box-shadow: 7px 7px 0 var(--destaque);
+    }
+
+    .icone-busca {
+      width: 58px;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      font-size: 20px;
+    }
+
+    .campo-busca {
+      width: 100%;
+      min-width: 0;
+      padding: 20px 8px;
+      border: 0;
+      outline: none;
+      background: transparent;
+      color: var(--texto);
+      font-size: 16px;
+    }
+
+    .botao-buscar {
+      margin: 5px;
+      padding: 0 28px;
+      border: 0;
+      background: var(--primaria);
+      color: white;
+      font-weight: 700;
+    }
+
+    .botao-buscar:hover {
+      background: var(--primaria-clara);
+    }
+
+    .buscas-populares {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .busca-popular {
+      padding: 0 0 3px;
+      border: 0;
+      border-bottom: 1px solid var(--muted);
+      background: transparent;
+      color: var(--texto);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .painel-numeros {
+      padding: 35px;
+      background: var(--primaria);
+      color: white;
+    }
+
+    .numeros-grade {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: rgba(255, 255, 255, 0.16);
+    }
+
+    .numero-item {
+      padding: 28px 20px;
+      background: var(--primaria);
+    }
+
+    .numero-valor {
+      color: var(--destaque);
+      font-family: "Martian Mono", monospace;
+      font-size: 30px;
+      font-weight: 700;
+    }
+
+    .numero-label {
+      margin-top: 8px;
+      color: rgba(255, 255, 255, 0.55);
+      font-size: 12px;
+    }
+
+    .frase {
+      margin-top: 30px;
+      padding-left: 18px;
+      border-left: 3px solid var(--destaque);
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.6;
+    }
+
+    .pagina {
+      min-height: calc(100vh - 79px);
+      padding: 45px 0 90px;
+    }
+
+    .pagina-topo {
+      margin-bottom: 35px;
+    }
+
+    .pagina-topo h1 {
+      margin: 10px 0;
+      font-family: "Martian Mono", monospace;
+      font-size: clamp(34px, 5vw, 54px);
+      letter-spacing: -3px;
+    }
+
+    .pagina-topo p {
+      max-width: 700px;
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .busca-resultados {
+      max-width: 900px;
+      margin-bottom: 32px;
+    }
+
+    .grade-resultados {
+      display: grid;
+      grid-template-columns: 250px minmax(0, 1fr);
+      gap: 28px;
+    }
+
+    .filtros {
+      height: max-content;
+      border: 1px solid var(--borda);
+      background: var(--cartao);
+    }
+
+    .filtros-titulo {
+      padding: 18px;
+      border-bottom: 1px solid var(--borda);
+      font-family: "Martian Mono", monospace;
+      font-weight: 700;
+    }
+
+    .filtro-grupo {
+      padding: 18px;
+      border-bottom: 1px solid var(--borda);
+    }
+
+    .filtro-label {
+      display: block;
+      margin-bottom: 12px;
+      color: var(--muted);
+      font-family: "Martian Mono", monospace;
+      font-size: 9px;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+    }
+
+    .filtro-opcao {
+      width: 100%;
+      margin-bottom: 5px;
+      padding: 10px 12px;
+      border: 0;
+      background: transparent;
+      color: var(--texto);
+      text-align: left;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .filtro-opcao:hover,
+    .filtro-opcao.ativo {
+      background: var(--primaria);
+      color: white;
+    }
+
+    .filtro-select {
+      width: 100%;
+      padding: 11px;
+      border: 1px solid var(--borda);
+      background: var(--fundo);
+      color: var(--texto);
+      outline: none;
+    }
+
+    .disponivel-filtro {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 18px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .resultados-cabecalho {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 18px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid var(--borda);
+    }
+
+    .resultados-cabecalho h2 {
+      margin: 4px 0 0;
+      font-family: "Martian Mono", monospace;
+      font-size: 22px;
+      letter-spacing: -1px;
+    }
+
+    .texto-menor {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .lista-contatos {
+      display: grid;
+      gap: 14px;
+    }
+
+    .contato {
+      display: grid;
+      grid-template-columns: auto 66px minmax(0, 1fr);
+      gap: 16px;
+      padding: 22px;
+      border: 1px solid var(--borda);
+      background: var(--cartao);
+      transition: 0.2s;
+    }
+
+    .contato:hover {
+      border-color: var(--texto);
+    }
+
+    .contato.selecionado {
+      border: 2px solid var(--primaria);
+      box-shadow: 5px 5px 0 var(--destaque);
+    }
+
+    .seletor-contato {
+      width: 21px;
+      height: 21px;
+      margin-top: 3px;
+      border: 1px solid var(--borda);
+      background: white;
+    }
+
+    .seletor-contato.marcado {
+      border-color: var(--primaria);
+      background: var(--primaria);
+      color: white;
+    }
+
+    .avatar {
+      width: 66px;
+      height: 66px;
+      display: grid;
+      place-items: center;
+      background: var(--primaria);
+      color: white;
+      font-family: "Martian Mono", monospace;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .contato-topo {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .contato-nome {
+      margin: 0;
+      font-family: "Martian Mono", monospace;
+      font-size: 18px;
+      letter-spacing: -0.7px;
+    }
+
+    .contato-profissao {
+      margin-top: 6px;
+      color: var(--primaria);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .avaliacao {
+      white-space: nowrap;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .estrela {
+      color: var(--destaque);
+    }
+
+    .contato-descricao {
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .contato-dados {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 15px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .disponivel {
+      color: var(--sucesso);
+      font-weight: 700;
+    }
+
+    .contato-acoes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid var(--borda);
+    }
+
+    .botao {
+      padding: 11px 15px;
+      border: 1px solid var(--borda);
+      background: transparent;
+      color: var(--texto);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .botao:hover {
+      border-color: var(--primaria);
+    }
+
+    .botao-primario {
+      border-color: var(--primaria);
+      background: var(--primaria);
+      color: white;
+    }
+
+    .botao-destaque {
+      border-color: var(--destaque);
+      background: var(--destaque);
+      color: white;
+    }
+
+    .botao-perigo {
+      border-color: var(--perigo);
+      color: var(--perigo);
+    }
+
+    .vazio {
+      padding: 75px 25px;
+      border: 1px dashed var(--borda);
+      text-align: center;
+    }
+
+    .vazio-icone {
+      width: 60px;
+      height: 60px;
+      margin: auto;
+      display: grid;
+      place-items: center;
+      background: var(--secundaria);
+      font-size: 25px;
+    }
+
+    .vazio h2 {
+      margin: 20px 0 8px;
+      font-family: "Martian Mono", monospace;
+    }
+
+    .vazio p {
+      max-width: 500px;
+      margin: 0 auto 25px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .barra-selecao {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      left: 20px;
+      z-index: 40;
+      max-width: 720px;
+      margin: auto;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      background: var(--primaria);
+      color: white;
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.25);
+    }
+
+    .barra-selecao strong {
+      display: block;
+      font-size: 14px;
+    }
+
+    .barra-selecao small {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .modal-fundo {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      padding: 20px;
+      display: grid;
+      place-items: center;
+      background: rgba(20, 39, 31, 0.88);
+      backdrop-filter: blur(6px);
+    }
+
+    .modal {
+      width: min(680px, 100%);
+      max-height: 94vh;
+      overflow-y: auto;
+      background: var(--cartao);
+    }
+
+    .modal-topo {
+      padding: 24px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      border-bottom: 1px solid var(--borda);
+    }
+
+    .modal-topo h2 {
+      margin: 8px 0 0;
+      font-family: "Martian Mono", monospace;
+      font-size: 24px;
+      letter-spacing: -1px;
+    }
+
+    .fechar {
+      width: 38px;
+      height: 38px;
+      border: 1px solid var(--borda);
+      background: transparent;
+      font-size: 20px;
+    }
+
+    .modal-conteudo {
+      padding: 24px;
+    }
+
+    .destinatarios {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .destinatario {
+      padding: 8px 10px;
+      background: var(--secundaria);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .modelos {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 7px;
+      margin-top: 10px;
+    }
+
+    .modelo {
+      padding: 12px 8px;
+      border: 1px solid var(--borda);
+      background: transparent;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .modelo.ativo {
+      border-color: var(--primaria);
+      background: var(--primaria);
+      color: white;
+    }
+
+    .form-grupo {
+      margin-top: 20px;
+    }
+
+    .form-grupo label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .form-campo {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid var(--borda);
+      background: var(--fundo);
+      color: var(--texto);
+      outline: none;
+    }
+
+    textarea.form-campo {
+      min-height: 220px;
+      resize: vertical;
+      line-height: 1.6;
+    }
+
+    .form-campo:focus {
+      border-color: var(--primaria);
+    }
+
+    .modal-rodape {
+      margin-top: 22px;
+      padding-top: 20px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      border-top: 1px solid var(--borda);
+    }
+
+    .carta-item {
+      display: grid;
+      grid-template-columns: 50px minmax(0, 1fr) auto;
+      gap: 16px;
+      align-items: center;
+      padding: 20px;
+      border-bottom: 1px solid var(--borda);
+      background: var(--cartao);
+    }
+
+    .carta-icone {
+      width: 50px;
+      height: 50px;
+      display: grid;
+      place-items: center;
+      background: var(--secundaria);
+      font-size: 21px;
+    }
+
+    .carta-item h3 {
+      margin: 0;
+      font-family: "Martian Mono", monospace;
+      font-size: 15px;
+    }
+
+    .carta-item p {
+      margin: 7px 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .carta-destinatarios {
+      color: var(--primaria);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .carta-data {
+      color: var(--muted);
+      font-size: 11px;
+      text-align: right;
+    }
+
+    .mensagem {
+      position: fixed;
+      top: 95px;
+      right: 20px;
+      z-index: 200;
+      max-width: 360px;
+      padding: 15px 18px;
+      background: var(--primaria);
+      color: white;
+      box-shadow: 5px 5px 0 var(--destaque);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    @media (max-width: 900px) {
+      .menu {
+        position: fixed;
+        right: 3%;
+        top: 70px;
+        left: 3%;
+        display: none;
+        padding: 8px;
+        border: 1px solid var(--borda);
+        background: var(--cartao);
+      }
+
+      .menu.aberto {
+        display: grid;
+      }
+
+      .menu-botao {
+        text-align: left;
+      }
+
+      .menu-mobile {
+        display: block !important;
+      }
+
+      .inicio {
+        min-height: auto;
+        grid-template-columns: 1fr;
+        gap: 45px;
+      }
+
+      .painel-numeros {
+        padding: 22px;
+      }
+
+      .grade-resultados {
+        grid-template-columns: 1fr;
+      }
+
+      .filtros {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .filtros-titulo {
+        grid-column: 1 / -1;
+      }
+
+      .disponivel-filtro {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .cabecalho-interno {
+        width: 92%;
+      }
+
+      .titulo-principal {
+        letter-spacing: -3px;
+      }
+
+      .form-busca {
+        display: grid;
+        grid-template-columns: 48px 1fr;
+      }
+
+      .botao-buscar {
+        grid-column: 1 / -1;
+        min-height: 48px;
+      }
+
+      .filtros {
+        grid-template-columns: 1fr;
+      }
+
+      .filtros-titulo,
+      .disponivel-filtro {
+        grid-column: auto;
+      }
+
+      .contato {
+        grid-template-columns: auto 52px minmax(0, 1fr);
+        padding: 16px;
+        gap: 10px;
+      }
+
+      .avatar {
+        width: 52px;
+        height: 52px;
+      }
+
+      .contato-topo {
+        display: block;
+      }
+
+      .avaliacao {
+        margin-top: 8px;
+      }
+
+      .contato-acoes {
+        display: grid;
+      }
+
+      .barra-selecao {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .modelos {
+        grid-template-columns: 1fr;
+      }
+
+      .carta-item {
+        grid-template-columns: 45px 1fr;
+      }
+
+      .carta-data {
+        grid-column: 2;
+        text-align: left;
+      }
+    }
+
+    .menu-mobile {
+      display: none;
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--borda);
+      background: transparent;
+      font-size: 20px;
+    }
+  </style>
 </head>
 
 <body>
 
-<header>
-<div class="wrap">
-<div class="brand">DAVI OBRAS</div>
-<div class="sub">Central de parcerias • Construção civil e empreitadas</div>
-</div>
+<header class="cabecalho">
+  <div class="cabecalho-interno">
+
+    <button class="logo" onclick="abrirInicio()">
+      <span class="logo-icone">⛑</span>
+
+      <span>
+        <span class="logo-nome">OBRA<span>CONECTA</span></span>
+        <span class="logo-descricao">Rede profissional</span>
+      </span>
+    </button>
+
+    <nav id="menu" class="menu">
+      <button
+        id="menuBuscar"
+        class="menu-botao ativo"
+        onclick="abrirInicio()"
+      >
+        🔎 Buscar
+      </button>
+
+      <button
+        id="menuSalvos"
+        class="menu-botao"
+        onclick="abrirSalvos()"
+      >
+        🔖 Salvos
+        <span id="contadorSalvos" class="contador oculto">0</span>
+      </button>
+
+      <button
+        id="menuCartas"
+        class="menu-botao"
+        onclick="abrirCartas()"
+      >
+        ✉ Cartas
+        <span id="contadorCartas" class="contador oculto">0</span>
+      </button>
+    </nav>
+
+    <button
+      class="menu-mobile"
+      onclick="alternarMenu()"
+      aria-label="Abrir menu"
+    >
+      ☰
+    </button>
+
+  </div>
 </header>
 
-<main>
+<main class="principal">
 
-<section class="hero">
-<h1>Encontre oportunidades de obras</h1>
-<p>Organize seus contatos e acompanhe suas oportunidades de trabalho.</p>
+  <!-- PÁGINA INICIAL -->
 
-<div class="stats">
-<div class="stat">
-<b id="total">0</b>
-<span>Contatos</span>
-</div>
-<div class="stat">
-<b id="sent">0</b>
-<span>Mensagens enviadas</span>
-</div>
-<div class="stat">
-<b id="replies">0</b>
-<span>Respostas</span>
-</div>
-</div>
-</section>
+  <section id="paginaInicio" class="inicio">
 
-<div class="toolbar">
-<input id="search" placeholder="Buscar empresa ou telefone">
+    <div>
+      <div class="rotulo">Profissionais para construir melhor</div>
 
-<select id="city">
-<option value="">Todas as cidades</option>
-<option>Betim</option>
-<option>Igarapé</option>
-<option>Ibirité</option>
-</select>
+      <h1 class="titulo-principal">
+        Encontre quem faz a obra
+        <span>acontecer.</span>
+      </h1>
 
-<select id="category">
-<option value="">Todas as categorias</option>
-<option>Engenharia</option>
-<option>Construtora / empreiteira</option>
-<option>Obras / construção</option>
-</select>
-</div>
+      <p class="descricao-principal">
+        Busque engenheiros, arquitetos e equipes para parceria ou
+        empreitada. Salve os melhores contatos e fale com todos de
+        uma só vez.
+      </p>
 
-<div class="cards" id="cards"></div>
+      <form class="form-busca" onsubmit="buscar(event)">
+        <div class="icone-busca">⌕</div>
 
-<div class="note">
-<b>Atenção:</b> confirme os números e nomes das empresas antes de enviar propostas.
-</div>
+        <input
+          id="buscaInicial"
+          class="campo-busca"
+          placeholder="Profissão, especialidade ou cidade..."
+          autocomplete="off"
+        >
 
-<section class="proposal">
-<h2>Envio em sequência pelo WhatsApp</h2>
+        <button class="botao-buscar" type="submit">
+          Buscar →
+        </button>
+      </form>
 
-<div class="actions">
-<button class="secondary" onclick="selectVisible(true)">
-Selecionar visíveis
-</button>
-<button class="secondary" onclick="selectVisible(false)">
-Limpar seleção
-</button>
-</div>
+      <div class="buscas-populares">
+        <span>Buscas populares:</span>
 
-<p><b id="selectedCount">0</b> contatos selecionados</p>
+        <button
+          class="busca-popular"
+          onclick="buscarRapido('Engenheiro estrutural')"
+        >
+          Engenheiro estrutural
+        </button>
 
-<select id="messageChoice">
-<option value="intro">Apresentação e parceria</option>
-<option value="empreitada">Proposta de empreitada</option>
-<option value="follow">Acompanhamento</option>
-</select>
+        <button
+          class="busca-popular"
+          onclick="buscarRapido('Arquiteto residencial')"
+        >
+          Arquiteto residencial
+        </button>
 
-<div class="actions" style="margin-top:12px">
-<button class="primary" onclick="startSequence()">Iniciar sequência</button>
-<button class="secondary" onclick="nextSequence()">Próximo contato</button>
-</div>
+        <button
+          class="busca-popular"
+          onclick="buscarRapido('Empreiteiro em Goiânia')"
+        >
+          Empreiteiro em Goiânia
+        </button>
+      </div>
+    </div>
 
-<p id="sequenceInfo">Selecione os contatos e inicie.</p>
-</section>
+    <aside class="painel-numeros">
+      <div class="numeros-grade">
+        <div class="numero-item">
+          <div class="numero-valor">1.240+</div>
+          <div class="numero-label">profissionais</div>
+        </div>
 
-<section class="proposal">
-<h2>Mensagem de apresentação</h2>
+        <div class="numero-item">
+          <div class="numero-valor">320</div>
+          <div class="numero-label">cidades</div>
+        </div>
 
-<textarea id="message">Olá, tudo bem?
+        <div class="numero-item">
+          <div class="numero-valor">4,8</div>
+          <div class="numero-label">avaliação média</div>
+        </div>
 
-Meu nome é Davi. Trabalho na construção civil e tenho experiência prática em obras.
+        <div class="numero-item">
+          <div class="numero-valor">86%</div>
+          <div class="numero-label">respondem em 24h</div>
+        </div>
+      </div>
 
-Estou buscando parcerias com engenheiros, construtoras e empreiteiras para execução de serviços e empreitadas.
+      <div class="frase">
+        “Boas parcerias começam com o contato certo.”
+      </div>
+    </aside>
 
-Gostaria de saber se vocês trabalham com profissionais parceiros ou equipes para executar obras.
+  </section>
 
-Posso conversar com o responsável pelas obras?
+  <!-- RESULTADOS -->
 
-Obrigado pela atenção!
-Davi</textarea>
+  <section id="paginaResultados" class="pagina oculto">
 
-<button class="secondary" onclick="copyMessage()">Copiar mensagem</button>
-</section>
+    <form class="form-busca busca-resultados" onsubmit="buscar(event)">
+      <div class="icone-busca">⌕</div>
+
+      <input
+        id="buscaResultados"
+        class="campo-busca"
+        placeholder="Profissão, especialidade ou cidade..."
+        autocomplete="off"
+      >
+
+      <button class="botao-buscar" type="submit">
+        Buscar →
+      </button>
+    </form>
+
+    <div class="grade-resultados">
+
+      <aside class="filtros">
+        <div class="filtros-titulo">⚙ Filtros</div>
+
+        <div class="filtro-grupo">
+          <span class="filtro-label">Profissional</span>
+
+          <button
+            class="filtro-opcao ativo"
+            data-categoria="Todos"
+            onclick="definirCategoria('Todos')"
+          >
+            Todos
+          </button>
+
+          <button
+            class="filtro-opcao"
+            data-categoria="Engenheiro"
+            onclick="definirCategoria('Engenheiro')"
+          >
+            Engenheiro
+          </button>
+
+          <button
+            class="filtro-opcao"
+            data-categoria="Arquiteto"
+            onclick="definirCategoria('Arquiteto')"
+          >
+            Arquiteto
+          </button>
+
+          <button
+            class="filtro-opcao"
+            data-categoria="Empreiteiro"
+            onclick="definirCategoria('Empreiteiro')"
+          >
+            Empreiteiro
+          </button>
+        </div>
+
+        <div class="filtro-grupo">
+          <label class="filtro-label" for="filtroCidade">
+            Localização
+          </label>
+
+          <select
+            id="filtroCidade"
+            class="filtro-select"
+            onchange="renderizarResultados()"
+          >
+            <option value="">Todas as cidades</option>
+            <option value="Goiânia">Goiânia</option>
+            <option value="Brasília">Brasília</option>
+            <option value="Anápolis">Anápolis</option>
+            <option value="Uberlândia">Uberlândia</option>
+            <option value="São Paulo">São Paulo</option>
+            <option value="Aparecida de Goiânia">
+              Aparecida de Goiânia
+            </option>
+          </select>
+        </div>
+
+        <label class="disponivel-filtro">
+          <input
+            id="filtroDisponivel"
+            type="checkbox"
+            onchange="renderizarResultados()"
+          >
+          Disponível para propostas
+        </label>
+      </aside>
+
+      <div>
+        <div class="resultados-cabecalho">
+          <div>
+            <div class="texto-menor">RESULTADO DA BUSCA</div>
+
+            <h2>
+              <span id="quantidadeResultados">0</span>
+              profissionais encontrados
+            </h2>
+          </div>
+
+          <div class="texto-menor">Ordenado por relevância</div>
+        </div>
+
+        <div id="listaResultados" class="lista-contatos"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTATOS SALVOS -->
+
+  <section id="paginaSalvos" class="pagina oculto">
+    <div class="pagina-topo">
+      <div class="rotulo">Sua rede</div>
+
+      <h1>Contatos salvos</h1>
+
+      <p>
+        Organize os profissionais que deseja consultar para próximas
+        obras, parcerias e empreitadas.
+      </p>
+    </div>
+
+    <div id="listaSalvos" class="lista-contatos"></div>
+  </section>
+
+  <!-- CARTAS -->
+
+  <section id="paginaCartas" class="pagina oculto">
+    <div class="pagina-topo">
+      <div class="rotulo">Comunicação</div>
+
+      <h1>Cartas enviadas</h1>
+
+      <p>
+        Histórico de apresentações, propostas de parceria e convites
+        para empreitada.
+      </p>
+    </div>
+
+    <div id="listaCartas"></div>
+  </section>
 
 </main>
 
-<footer>
-DAVI OBRAS • Sua rede de oportunidades na construção civil
-</footer>
+<!-- BARRA DE SELEÇÃO -->
+
+<div id="barraSelecao" class="barra-selecao oculto">
+  <div>
+    <strong>
+      <span id="quantidadeSelecionados">0</span>
+      contato(s) selecionado(s)
+    </strong>
+
+    <small>Pronto para preparar uma carta</small>
+  </div>
+
+  <div>
+    <button class="botao" style="color:white" onclick="limparSelecao()">
+      Limpar
+    </button>
+
+    <button class="botao botao-destaque" onclick="abrirCarta()">
+      ✉ Escrever carta
+    </button>
+  </div>
+</div>
+
+<!-- MODAL DA CARTA -->
+
+<div id="modalCarta" class="modal-fundo oculto">
+  <div class="modal">
+
+    <div class="modal-topo">
+      <div>
+        <div class="texto-menor">NOVA COMUNICAÇÃO</div>
+        <h2>Enviar carta aos contatos</h2>
+      </div>
+
+      <button class="fechar" onclick="fecharCarta()">×</button>
+    </div>
+
+    <form class="modal-conteudo" onsubmit="enviarCarta(event)">
+
+      <div>
+        <div class="filtro-label">Destinatários</div>
+        <div id="destinatariosCarta" class="destinatarios"></div>
+      </div>
+
+      <div class="form-grupo">
+        <div class="filtro-label">Modelo de carta</div>
+
+        <div class="modelos">
+          <button
+            type="button"
+            class="modelo ativo"
+            data-modelo="parceria"
+            onclick="selecionarModelo('parceria')"
+          >
+            Proposta de parceria
+          </button>
+
+          <button
+            type="button"
+            class="modelo"
+            data-modelo="empreitada"
+            onclick="selecionarModelo('empreitada')"
+          >
+            Convite para empreitada
+          </button>
+
+          <button
+            type="button"
+            class="modelo"
+            data-modelo="apresentacao"
+            onclick="selecionarModelo('apresentacao')"
+          >
+            Apresentação
+          </button>
+        </div>
+      </div>
+
+      <div class="form-grupo">
+        <label for="assuntoCarta">Assunto</label>
+
+        <input
+          id="assuntoCarta"
+          class="form-campo"
+          required
+        >
+      </div>
+
+      <div class="form-grupo">
+        <label for="mensagemCarta">Mensagem</label>
+
+        <textarea
+          id="mensagemCarta"
+          class="form-campo"
+          required
+        ></textarea>
+      </div>
+
+      <div class="modal-rodape">
+        <button type="button" class="botao" onclick="fecharCarta()">
+          Cancelar
+        </button>
+
+        <button type="submit" class="botao botao-destaque">
+          Enviar carta
+        </button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<div id="mensagem" class="mensagem oculto"></div>
 
 <script>
+  const profissionais = [
+    {
+      id: 1,
+      nome: "Marina Albuquerque",
+      profissao: "Arquiteto",
+      especialidade: "Arquitetura residencial e interiores",
+      cidade: "Goiânia",
+      estado: "GO",
+      experiencia: 12,
+      avaliacao: 4.9,
+      projetos: 86,
+      telefone: "(62) 99142-8041",
+      email: "marina@albuquerque.arq.br",
+      disponivel: true,
+      descricao:
+        "Projetos residenciais de médio e alto padrão, compatibilização e acompanhamento de obra.",
+      iniciais: "MA",
+      cor: "#d64f2a"
+    },
+    {
+      id: 2,
+      nome: "Eduardo Sampaio",
+      profissao: "Engenheiro",
+      especialidade: "Engenharia civil e estruturas",
+      cidade: "Brasília",
+      estado: "DF",
+      experiencia: 15,
+      avaliacao: 4.8,
+      projetos: 124,
+      telefone: "(61) 99820-1174",
+      email: "eduardo@sampaioengenharia.com",
+      disponivel: true,
+      descricao:
+        "Cálculo estrutural, laudos, planejamento e gestão técnica de obras comerciais.",
+      iniciais: "ES",
+      cor: "#234d3c"
+    },
+    {
+      id: 3,
+      nome: "Construtora Norte Sul",
+      profissao: "Empreiteiro",
+      especialidade: "Empreitada global e reformas",
+      cidade: "Anápolis",
+      estado: "GO",
+      experiencia: 18,
+      avaliacao: 4.7,
+      projetos: 211,
+      telefone: "(62) 99301-5520",
+      email: "obras@construtoranortesul.com.br",
+      disponivel: true,
+      descricao:
+        "Equipes completas para execução por empreitada, reformas corporativas e obras industriais.",
+      iniciais: "NS",
+      cor: "#3f5f70"
+    },
+    {
+      id: 4,
+      nome: "Camila Rezende",
+      profissao: "Arquiteto",
+      especialidade: "Comercial e paisagismo",
+      cidade: "Uberlândia",
+      estado: "MG",
+      experiencia: 9,
+      avaliacao: 4.9,
+      projetos: 64,
+      telefone: "(34) 99224-1608",
+      email: "camila@rezendearquitetura.com",
+      disponivel: false,
+      descricao:
+        "Concepção de espaços comerciais, restaurantes, fachadas e paisagismo.",
+      iniciais: "CR",
+      cor: "#8d6e55"
+    },
+    {
+      id: 5,
+      nome: "Rafael Moura",
+      profissao: "Engenheiro",
+      especialidade: "Instalações e eficiência energética",
+      cidade: "São Paulo",
+      estado: "SP",
+      experiencia: 11,
+      avaliacao: 4.6,
+      projetos: 93,
+      telefone: "(11) 98762-4310",
+      email: "rafael@moura.eng.br",
+      disponivel: true,
+      descricao:
+        "Projetos elétricos, hidrossanitários, energia solar e eficiência energética.",
+      iniciais: "RM",
+      cor: "#594f7c"
+    },
+    {
+      id: 6,
+      nome: "Base Forte Engenharia",
+      profissao: "Empreiteiro",
+      especialidade: "Fundações e estrutura",
+      cidade: "Aparecida de Goiânia",
+      estado: "GO",
+      experiencia: 21,
+      avaliacao: 4.8,
+      projetos: 178,
+      telefone: "(62) 98550-7321",
+      email: "comercial@baseforte.eng.br",
+      disponivel: true,
+      descricao:
+        "Execução de fundações, contenções, estruturas e mão de obra especializada.",
+      iniciais: "BF",
+      cor: "#343d46"
+    }
+  ];
 
-const contacts = [
-["DIP Engenharia e Projetos","Betim","Engenharia","31 4104-3184"],
-["Lim Engenharia","Betim","Engenharia","31 98729-0028"],
-["LINEAR Projetos e Soluções","Betim","Engenharia","31 99680-1478"],
-["ASTENG Engenharia","Betim","Engenharia","31 99955-1332"],
-["Encad Projetos","Betim","Engenharia","31 3594-1907"],
-["Gabiotec Engenharia","Betim","Engenharia","31 3532-2499"],
-["Gabiotec Engenharia","Betim","Engenharia","31 99924-2329"],
-["Dutra Engenharia","Betim","Engenharia","31 3531-0234"],
-["Dutra Engenharia","Betim","Engenharia","31 99741-1759"],
-["Promec Engenharia","Betim","Engenharia","31 4042-8768"],
-["Promec Engenharia","Betim","Engenharia","31 99945-9009"],
-["HJ Projetos e Engenharia","Betim","Engenharia","31 99725-5872"],
-["GAB Projetos","Betim","Engenharia","31 99971-3400"],
-["R.E Engenharia","Betim","Engenharia","31 99289-2388"],
-["Engar Engenharia","Betim","Engenharia","31 98836-8884"],
-["WM Engenharia","Betim","Engenharia","31 99157-2458"],
-["Bios Engenharia","Betim","Engenharia","31 99672-3898"],
-["JGM Engenharia","Betim","Engenharia","31 99945-7313"],
-["VD Engenharia","Betim","Engenharia","31 97225-3322"],
-["Leão Costa Engenharia","Betim","Engenharia","31 3531-9964"],
-["BRS Engenharia","Igarapé","Engenharia","31 3534-3556"],
-["RP Engenharia","Igarapé","Engenharia","31 97525-5051"],
-["Slump Engenharia","Igarapé","Engenharia","31 3534-1488"],
-["Jasa Construtora","Igarapé","Construtora / empreiteira","31 99090-2932"],
-["MWT Construtora","Igarapé","Construtora / empreiteira","31 99825-7190"],
-["GC Engenharia","Ibirité","Engenharia","31 99867-2982"],
-["Augustus Engenharia","Ibirité","Engenharia","31 97139-6168"],
-["Construtora GEA","Ibirité","Construtora / empreiteira","31 3598-9424"],
-["Empresa de paredes de concreto (nome a confirmar)","Ibirité","Obras / construção","31 4134-1876"],
-["R&C Construtora","Ibirité","Construtora / empreiteira","31 99663-5410"],
-["NBL Modulares","Ibirité","Construtora / empreiteira","31 99979-1028"],
-["Construtora / incorporadora (nome a confirmar)","Betim","Construtora / empreiteira","31 2571-2626"]
-];
+  const modelosCarta = {
+    parceria: {
+      assunto: "Proposta de parceria profissional",
+      mensagem:
+`Olá,
 
-const key="daviObrasStatusV1";
-let status={};
-try{
-status=JSON.parse(localStorage.getItem(key)||"{}");
-}catch(e){}
+Encontrei seu perfil na ObraConecta e gostaria de conversar sobre uma possível parceria para projetos futuros.
 
-let selected=new Set();
-let sequence=[];
-let sequencePos=-1;
+Podemos agendar uma breve conversa para apresentar nossa empresa e entender sua disponibilidade?
 
-const messages={
-empreitada:`Olá, tudo bem?
+Atenciosamente,`
+    },
 
-Meu nome é Davi e trabalho na construção civil. Tenho experiência prática em obras e estou buscando parcerias para assumir serviços por empreitada.
+    empreitada: {
+      assunto: "Convite para orçamento de empreitada",
+      mensagem:
+`Olá,
 
-Posso apresentar uma proposta de execução de serviços conforme o projeto, escopo e prazo.
+Estamos selecionando profissionais para uma nova obra e gostaríamos de solicitar uma apresentação e orçamento para execução por empreitada.
 
-Quem seria a pessoa responsável pelas obras para conversarmos?
+Caso tenha interesse, responda esta mensagem para enviarmos o escopo completo.
 
-Obrigado!
-Davi`,
+Atenciosamente,`
+    },
 
-follow:`Olá! Tudo bem?
+    apresentacao: {
+      assunto: "Apresentação e contato profissional",
+      mensagem:
+`Olá,
 
-Estou retomando nosso contato para saber se existe alguma necessidade de profissionais parceiros para execução de obras ou empreitadas.
+Gostaria de apresentar nossa empresa e manter seu contato em nossa rede de profissionais para futuras oportunidades.
 
-Fico à disposição para conversar e apresentar uma proposta.
+Será um prazer conhecer melhor o seu trabalho.
 
-Obrigado!
-Davi`
-};
+Atenciosamente,`
+    }
+  };
 
-function digits(s){
-return s.replace(/\D/g,"");
-}
+  let termoBusca = "";
+  let categoriaAtual = "Todos";
 
-function toggleSelected(i,v){
-if(v)selected.add(i);
-else selected.delete(i);
-updateSelectedCount();
-}
+  let contatosSalvos = carregarLocal("obra_conecta_salvos", []);
+  let contatosSelecionados = [];
+  let cartasEnviadas = carregarLocal("obra_conecta_cartas", []);
 
-function selectVisible(v){
-document.querySelectorAll(".bulk-check").forEach(el=>{
-const i=Number(el.dataset.index);
-if(v)selected.add(i);
-else selected.delete(i);
-el.checked=v;
-});
-updateSelectedCount();
-}
+  function carregarLocal(chave, valorInicial) {
+    try {
+      const valor = localStorage.getItem(chave);
+      return valor ? JSON.parse(valor) : valorInicial;
+    } catch (erro) {
+      return valorInicial;
+    }
+  }
 
-function updateSelectedCount(){
-document.getElementById("selectedCount").textContent=selected.size;
-}
+  function salvarLocal(chave, valor) {
+    localStorage.setItem(chave, JSON.stringify(valor));
+  }
 
-function getCurrentMessage(){
-const choice=document.getElementById("messageChoice").value;
-return choice==="intro"
-?document.getElementById("message").value
-:messages[choice];
-}
+  function esconderPaginas() {
+    [
+      "paginaInicio",
+      "paginaResultados",
+      "paginaSalvos",
+      "paginaCartas"
+    ].forEach(function(id) {
+      document.getElementById(id).classList.add("oculto");
+    });
 
-function startSequence(){
-sequence=[...selected].sort((a,b)=>a-b);
-sequencePos=-1;
+    document.querySelectorAll(".menu-botao").forEach(function(botao) {
+      botao.classList.remove("ativo");
+    });
 
-if(!sequence.length){
-document.getElementById("sequenceInfo").textContent="Selecione pelo menos um contato.";
-return;
-}
-nextSequence();
-}
+    document.getElementById("menu").classList.remove("aberto");
+  }
 
-function nextSequence(){
+  function abrirInicio() {
+    esconderPaginas();
 
-if(!sequence.length){
-document.getElementById("sequenceInfo").textContent="Selecione os contatos e inicie.";
-return;
-}
+    document
+      .getElementById("paginaInicio")
+      .classList.remove("oculto");
 
-sequencePos++;
+    document
+      .getElementById("menuBuscar")
+      .classList.add("ativo");
+  }
 
-if(sequencePos>=sequence.length){
-document.getElementById("sequenceInfo").textContent="Sequência finalizada.";
-return;
-}
+  function abrirResultados() {
+    esconderPaginas();
 
-const c=contacts[sequence[sequencePos]];
+    document
+      .getElementById("paginaResultados")
+      .classList.remove("oculto");
 
-const url="https://wa.me/55"+
-digits(c[3])+
-"?text="+encodeURIComponent(getCurrentMessage());
+    document
+      .getElementById("menuBuscar")
+      .classList.add("ativo");
 
-document.getElementById("sequenceInfo").textContent=
-"Contato "+(sequencePos+1)+" de "+sequence.length+
-": "+c[0]+". Confirme o envio no WhatsApp.";
+    renderizarResultados();
+  }
 
-window.open(url,"_blank","noopener");
-}
+  function abrirSalvos() {
+    esconderPaginas();
 
-function render(){
+    document
+      .getElementById("paginaSalvos")
+      .classList.remove("oculto");
 
-const q=document.getElementById("search").value.toLowerCase();
-const city=document.getElementById("city").value;
-const cat=document.getElementById("category").value;
+    document
+      .getElementById("menuSalvos")
+      .classList.add("ativo");
 
-const filtered=contacts.map((c,i)=>({
-name:c[0],city:c[1],cat:c[2],phone:c[3],i
-})).filter(c=>
-(!q||(c.name+" "+c.phone).toLowerCase().includes(q))&&
-(!city||c.city===city)&&
-(!cat||c.cat===cat)
-);
+    renderizarSalvos();
+  }
 
-document.getElementById("cards").innerHTML=filtered.map(c=>{
+  function abrirCartas() {
+    esconderPaginas();
 
-const s=status[c.i]||{};
-const wa="https://wa.me/55"+digits(c.phone)+
-"?text="+encodeURIComponent(document.getElementById("message").value);
+    document
+      .getElementById("paginaCartas")
+      .classList.remove("oculto");
 
-return `
-<article class="card">
-<h3>${c.name}</h3>
-<div class="meta">${c.city} • ${c.cat}</div>
-<div class="phone">${c.phone}</div>
+    document
+      .getElementById("menuCartas")
+      .classList.add("ativo");
 
-<div class="status">
-<label>
-<input class="bulk-check" type="checkbox"
-data-index="${c.i}"
-${selected.has(c.i)?"checked":""}
-onchange="toggleSelected(${c.i},this.checked)">
-Selecionar para sequência
-</label>
-</div>
+    renderizarCartas();
+  }
 
-<div class="actions">
-<a class="btn primary" href="${wa}" target="_blank" rel="noopener">
-Abrir WhatsApp
-</a>
-<a class="btn secondary" href="tel:+55${digits(c.phone)}">
-Ligar
-</a>
-</div>
+  function alternarMenu() {
+    document.getElementById("menu").classList.toggle("aberto");
+  }
 
-<div class="status">
-<label>
-<input type="checkbox" ${s.sent?"checked":""}
-onchange="setStatus(${c.i},'sent',this.checked)">
-Mensagem enviada
-</label>
-</div>
+  function buscar(evento) {
+    evento.preventDefault();
 
-<div class="status">
-<label>
-<input type="checkbox" ${s.reply?"checked":""}
-onchange="setStatus(${c.i},'reply',this.checked)">
-Respondeu
-</label>
-</div>
-</article>
-`;
-}).join("")||"<p>Nenhum contato encontrado.</p>";
+    const campoInicial = document.getElementById("buscaInicial");
+    const campoResultados = document.getElementById("buscaResultados");
 
-document.getElementById("total").textContent=contacts.length;
-document.getElementById("sent").textContent=
-Object.values(status).filter(x=>x.sent).length;
-document.getElementById("replies").textContent=
-Object.values(status).filter(x=>x.reply).length;
+    termoBusca = (
+      campoResultados.value ||
+      campoInicial.value ||
+      ""
+    ).trim();
 
-updateSelectedCount();
-}
+    campoInicial.value = termoBusca;
+    campoResultados.value = termoBusca;
 
-function setStatus(i,k,v){
-status[i]=status[i]||{};
-status[i][k]=v;
-localStorage.setItem(key,JSON.stringify(status));
-render();
-}
+    abrirResultados();
+  }
 
-function copyMessage(){
-const t=document.getElementById("message");
-t.select();
-document.execCommand("copy");
-alert("Mensagem copiada.");
-}
+  function buscarRapido(termo) {
+    termoBusca = termo;
 
-["search","city","category"].forEach(id=>{
-document.getElementById(id).addEventListener("input",render);
-});
+    document.getElementById("buscaInicial").value = termo;
+    document.getElementById("buscaResultados").value = termo;
 
-render();
+    abrirResultados();
+  }
 
+  function definirCategoria(categoria) {
+    categoriaAtual = categoria;
+
+    document
+      .querySelectorAll("[data-categoria]")
+      .forEach(function(botao) {
+        botao.classList.toggle(
+          "ativo",
+          botao.dataset.categoria === categoria
+        );
+      });
+
+    renderizarResultados();
+  }
+
+  function filtrarProfissionais() {
+    const termo = termoBusca.toLowerCase();
+    const cidade = document.getElementById("filtroCidade").value;
+    const somenteDisponiveis =
+      document.getElementById("filtroDisponivel").checked;
+
+    return profissionais.filter(function(profissional) {
+      const texto = [
+        profissional.nome,
+        profissional.profissao,
+        profissional.especialidade,
+        profissional.cidade,
+        profissional.estado,
+        profissional.descricao
+      ].join(" ").toLowerCase();
+
+      const correspondeBusca =
+        !termo || texto.includes(termo);
+
+      const correspondeCategoria =
+        categoriaAtual === "Todos" ||
+        profissional.profissao === categoriaAtual;
+
+      const correspondeCidade =
+        !cidade ||
+        profissional.cidade === cidade;
+
+      const correspondeDisponibilidade =
+        !somenteDisponiveis ||
+        profissional.disponivel;
+
+      return (
+        correspondeBusca &&
+        correspondeCategoria &&
+        correspondeCidade &&
+        correspondeDisponibilidade
+      );
+    });
+  }
+
+  function renderizarResultados() {
+    const resultados = filtrarProfissionais();
+
+    document.getElementById("quantidadeResultados").textContent =
+      resultados.length;
+
+    renderizarLista(
+      document.getElementById("listaResultados"),
+      resultados
+    );
+  }
+
+  function renderizarSalvos() {
+    const lista = profissionais.filter(function(profissional) {
+      return contatosSalvos.includes(profissional.id);
+    });
+
+    const area = document.getElementById("listaSalvos");
+
+    if (!lista.length) {
+      area.innerHTML = criarVazio(
+        "🔖",
+        "Nenhum contato salvo",
+        "Quando encontrar um profissional interessante, clique em Salvar para guardar aqui.",
+        "Buscar profissionais",
+        "abrirInicio()"
+      );
+
+      return;
+    }
+
+    renderizarLista(area, lista);
+  }
+
+  function renderizarCartas() {
+    const area = document.getElementById("listaCartas");
+
+    if (!cartasEnviadas.length) {
+      area.innerHTML = criarVazio(
+        "✉",
+        "Nenhuma carta enviada",
+        "Selecione um ou mais contatos e envie uma proposta de parceria ou convite para empreitada.",
+        "Encontrar contatos",
+        "abrirInicio()"
+      );
+
+      return;
+    }
+
+    area.innerHTML = cartasEnviadas.map(function(carta) {
+      return `
+        <article class="carta-item">
+          <div class="carta-icone">✉</div>
+
+          <div>
+            <h3>${escapar(carta.assunto)}</h3>
+
+            <p>${escapar(carta.mensagem).slice(0, 130)}...</p>
+
+            <div class="carta-destinatarios">
+              Para: ${carta.destinatarios.map(escapar).join(", ")}
+            </div>
+          </div>
+
+          <div class="carta-data">
+            ✓ Enviada<br>
+            ${escapar(carta.data)}
+          </div>
+        </article>
+      `;
+    }).join("");
+  }
+
+  function renderizarLista(area, lista) {
+    if (!lista.length) {
+      area.innerHTML = criarVazio(
+        "⌕",
+        "Nenhum profissional encontrado",
+        "Tente alterar o termo pesquisado ou remover algum filtro.",
+        "Limpar filtros",
+        "limparFiltros()"
+      );
+
+      return;
+    }
+
+    area.innerHTML = lista.map(criarContato).join("");
+  }
+
+  function criarContato(profissional) {
+    const salvo = contatosSalvos.includes(profissional.id);
+    const selecionado =
+      contatosSelecionados.includes(profissional.id);
+
+    return `
+      <article class="contato ${selecionado ? "selecionado" : ""}">
+        <button
+          class="seletor-contato ${selecionado ? "marcado" : ""}"
+          onclick="alternarSelecao(${profissional.id})"
+          title="Selecionar contato"
+        >
+          ${selecionado ? "✓" : ""}
+        </button>
+
+        <div
+          class="avatar"
+          style="background:${profissional.cor}"
+        >
+          ${profissional.iniciais}
+        </div>
+
+        <div>
+          <div class="contato-topo">
+            <div>
+              <h3 class="contato-nome">
+                ${escapar(profissional.nome)}
+              </h3>
+
+              <div class="contato-profissao">
+                ${profissional.profissao}
+                ·
+                ${escapar(profissional.especialidade)}
+              </div>
+            </div>
+
+            <div class="avaliacao">
+              <span class="estrela">★</span>
+              ${profissional.avaliacao}
+              <span class="texto-menor">
+                (${profissional.projetos})
+              </span>
+            </div>
+          </div>
+
+          <p class="contato-descricao">
+            ${escapar(profissional.descricao)}
+          </p>
+
+          <div class="contato-dados">
+            <span>
+              📍 ${profissional.cidade} — ${profissional.estado}
+            </span>
+
+            <span>
+              💼 ${profissional.experiencia} anos
+            </span>
+
+            <span class="${profissional.disponivel ? "disponivel" : ""}">
+              ●
+              ${
+                profissional.disponivel
+                  ? "Disponível para propostas"
+                  : "Agenda ocupada"
+              }
+            </span>
+          </div>
+
+          <div class="contato-acoes">
+            <button
+              class="botao botao-primario"
+              onclick="escreverPara(${profissional.id})"
+            >
+              ✉ Enviar carta
+            </button>
+
+            <button
+              class="botao"
+              onclick="alternarSalvo(${profissional.id})"
+            >
+              ${salvo ? "✓ Contato salvo" : "🔖 Salvar contato"}
+            </button>
+
+            <a
+              class="botao"
+              href="tel:${profissional.telefone}"
+              style="text-decoration:none"
+            >
+              ☎ Ligar
+            </a>
+
+            <a
+              class="botao"
+              href="mailto:${profissional.email}"
+              style="text-decoration:none"
+            >
+              E-mail
+            </a>
+          </div>
+        </div>
+      </article>
+    `;
+  }
+
+  function criarVazio(icone, titulo, texto, botao, acao) {
+    return `
+      <div class="vazio">
+        <div class="vazio-icone">${icone}</div>
+        <h2>${titulo}</h2>
+        <p>${texto}</p>
+
+        <button class="botao botao-primario" onclick="${acao}">
+          ${botao} →
+        </button>
+      </div>
+    `;
+  }
+
+  function limparFiltros() {
+    termoBusca = "";
+    categoriaAtual = "Todos";
+
+    document.getElementById("buscaInicial").value = "";
+    document.getElementById("buscaResultados").value = "";
+    document.getElementById("filtroCidade").value = "";
+    document.getElementById("filtroDisponivel").checked = false;
+
+    document
+      .querySelectorAll("[data-categoria]")
+      .forEach(function(botao) {
+        botao.classList.toggle(
+          "ativo",
+          botao.dataset.categoria === "Todos"
+        );
+      });
+
+    renderizarResultados();
+  }
+
+  function alternarSalvo(id) {
+    if (contatosSalvos.includes(id)) {
+      contatosSalvos = contatosSalvos.filter(function(item) {
+        return item !== id;
+      });
+
+      mostrarMensagem("Contato removido dos salvos.");
+    } else {
+      contatosSalvos.push(id);
+      mostrarMensagem("Contato salvo na sua lista.");
+    }
+
+    salvarLocal("obra_conecta_salvos", contatosSalvos);
+    atualizarContadores();
+
+    const salvosVisiveis =
+      !document.getElementById("paginaSalvos").classList.contains("oculto");
+
+    if (salvosVisiveis) {
+      renderizarSalvos();
+    } else {
+      renderizarResultados();
+    }
+  }
+
+  function alternarSelecao(id) {
+    if (contatosSelecionados.includes(id)) {
+      contatosSelecionados =
+        contatosSelecionados.filter(function(item) {
+          return item !== id;
+        });
+    } else {
+      contatosSelecionados.push(id);
+    }
+
+    atualizarBarraSelecao();
+
+    if (
+      !document
+        .getElementById("paginaSalvos")
+        .classList.contains("oculto")
+    ) {
+      renderizarSalvos();
+    } else {
+      renderizarResultados();
+    }
+  }
+
+  function limparSelecao() {
+    contatosSelecionados = [];
+    atualizarBarraSelecao();
+    renderizarResultados();
+    renderizarSalvos();
+  }
+
+  function atualizarBarraSelecao() {
+    const barra = document.getElementById("barraSelecao");
+
+    document.getElementById("quantidadeSelecionados").textContent =
+      contatosSelecionados.length;
+
+    barra.classList.toggle(
+      "oculto",
+      contatosSelecionados.length === 0
+    );
+  }
+
+  function escreverPara(id) {
+    contatosSelecionados = [id];
+    atualizarBarraSelecao();
+    abrirCarta();
+  }
+
+  function abrirCarta() {
+    if (!contatosSelecionados.length) {
+      mostrarMensagem("Selecione pelo menos um contato.");
+      return;
+    }
+
+    const destinatarios = profissionais.filter(function(profissional) {
+      return contatosSelecionados.includes(profissional.id);
+    });
+
+    document.getElementById("destinatariosCarta").innerHTML =
+      destinatarios.map(function(profissional) {
+        return `
+          <span class="destinatario">
+            ${escapar(profissional.nome)}
+          </span>
+        `;
+      }).join("");
+
+    selecionarModelo("parceria");
+
+    document
+      .getElementById("modalCarta")
+      .classList.remove("oculto");
+  }
+
+  function fecharCarta() {
+    document.getElementById("modalCarta").classList.add("oculto");
+  }
+
+  function selecionarModelo(modelo) {
+    const dados = modelosCarta[modelo];
+
+    document.getElementById("assuntoCarta").value =
+      dados.assunto;
+
+    document.getElementById("mensagemCarta").value =
+      dados.mensagem;
+
+    document
+      .querySelectorAll("[data-modelo]")
+      .forEach(function(botao) {
+        botao.classList.toggle(
+          "ativo",
+          botao.dataset.modelo === modelo
+        );
+      });
+  }
+
+  function enviarCarta(evento) {
+    evento.preventDefault();
+
+    const assunto =
+      document.getElementById("assuntoCarta").value.trim();
+
+    const mensagem =
+      document.getElementById("mensagemCarta").value.trim();
+
+    const destinatarios = profissionais.filter(function(profissional) {
+      return contatosSelecionados.includes(profissional.id);
+    });
+
+    if (!destinatarios.length) {
+      mostrarMensagem("Nenhum contato selecionado.");
+      return;
+    }
+
+    const carta = {
+      id: Date.now(),
+      assunto: assunto,
+      mensagem: mensagem,
+      destinatarios: destinatarios.map(function(profissional) {
+        return profissional.nome;
+      }),
+      data: new Date().toLocaleString("pt-BR")
+    };
+
+    cartasEnviadas.unshift(carta);
+
+    salvarLocal("obra_conecta_cartas", cartasEnviadas);
+
+    const emails = destinatarios
+      .map(function(profissional) {
+        return profissional.email;
+      })
+      .join(",");
+
+    const linkEmail =
+      "mailto:" +
+      encodeURIComponent(emails) +
+      "?subject=" +
+      encodeURIComponent(assunto) +
+      "&body=" +
+      encodeURIComponent(mensagem);
+
+    fecharCarta();
+    contatosSelecionados = [];
+    atualizarBarraSelecao();
+    atualizarContadores();
+    abrirCartas();
+
+    mostrarMensagem("Carta salva. Abrindo aplicativo de e-mail.");
+
+    setTimeout(function() {
+      window.location.href = linkEmail;
+    }, 500);
+  }
+
+  function atualizarContadores() {
+    const contadorSalvos =
+      document.getElementById("contadorSalvos");
+
+    const contadorCartas =
+      document.getElementById("contadorCartas");
+
+    contadorSalvos.textContent = contatosSalvos.length;
+    contadorCartas.textContent = cartasEnviadas.length;
+
+    contadorSalvos.classList.toggle(
+      "oculto",
+      contatosSalvos.length === 0
+    );
+
+    contadorCartas.classList.toggle(
+      "oculto",
+      cartasEnviadas.length === 0
+    );
+  }
+
+  function mostrarMensagem(texto) {
+    const elemento = document.getElementById("mensagem");
+
+    elemento.textContent = texto;
+    elemento.classList.remove("oculto");
+
+    clearTimeout(window.tempoMensagem);
+
+    window.tempoMensagem = setTimeout(function() {
+      elemento.classList.add("oculto");
+    }, 3000);
+  }
+
+  function escapar(texto) {
+    return String(texto)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
+  atualizarContadores();
+  selecionarModelo("parceria");
 </script>
+
 </body>
 </html>
+            
+            
+            
+            
+            
+
+
+            
+
+
+
